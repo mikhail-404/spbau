@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.8)
 
 project (au_huffman)
 
-set (CMAKE_CXX_FLAGS "-Wall -std=c++11")
+set (CMAKE_CXX_FLAGS "-Wall -Werror -std=c++11")
 
 include_directories(src include)
 

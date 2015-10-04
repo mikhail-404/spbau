@@ -1,8 +1,6 @@
 #ifndef TREE_NODE_HPP
 #define TREE_NODE_HPP
 
-#include <iostream>
-
 class TreeNode
 {
 public:
