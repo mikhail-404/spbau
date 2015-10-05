@@ -31,44 +31,55 @@ void binary_write_table_frequency(std::ofstream &out, const std::map <char, std:
         char code_size = static_cast <char>(it->second.length());
         out.write((char*)&code_size, sizeof(code_size));
         int convert_code_string = convert(it->second);
+        //std::cout << it->second;
         out.write((char*)&convert_code_string, sizeof(convert_code_string));
+        std::cout << it->first << ": " << it->second << std::endl;
     }
+    std::cout << std::endl;
     std::cout << "Done" << std::endl;
 }
 
 void binary_write_text(std::ifstream &in, std::ofstream &out, std::map <char, std::string> dictionary)
 {
-    in.seekg(0, std::ios::beg);
     std::string temp("");
     char current_char;
     int current_number = 0;
 
-    while (in >> current_char)
+    in.seekg(0, std::ios::beg);
+
+    //std::cout << "Text: ";
+    while (in.read(&current_char, 1))
     {
         temp += dictionary[current_char];
         if (temp.length() / BITS_SIZE)
         {
             std::string tmp(temp, 0, BITS_SIZE);
+            //std::cout << tmp;
             current_number = convert(tmp);
+            std::cout << "2_Code: " << current_number << std::endl;
             out.write((char*)&current_number, sizeof(current_number));
+            //std::cout << current_number << std::endl;
             temp.erase(0, BITS_SIZE);
         }
     }
     if (temp.length() > 0)
     {
+        //std::cout << temp;
         current_number = convert(temp);
         out.write((char*)&current_number, sizeof(current_number));
     }
+    //std::cout << std::endl;
 }
 
 void encoder(std::ifstream &in, std::ofstream &out)
 {
     std::map <char, int> dictionary;
     char current_char;
-    while (in >> current_char)
+    while (in.read(&current_char, 1))
     {
         ++dictionary[current_char];
     }
+    in.clear();
 
     // передаем таблицу частотности символов для построения дерева кодов
     HuffmanTree huffman_tree(dictionary);
