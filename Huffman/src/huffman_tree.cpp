@@ -54,8 +54,11 @@ void HuffmanTree::create_tree_by_dictionary(const std::map <char, int> &dictiona
     m_root = tree_nodes_queue.top();
 }
 
-void HuffmanTree::codes() const
+// возвращает таблицу кодов для каждого символа
+std::map <char, std::string> HuffmanTree::codes() const
 {
     std::string result_code("");
-    TreeNode::get_huffman_code(m_root, result_code);
+    std::map <char, std::string> result_map;
+    TreeNode::get_huffman_code(m_root, result_map, result_code);
+    return result_map;
 }

@@ -1,6 +1,8 @@
 #ifndef TREE_NODE_HPP
 #define TREE_NODE_HPP
 
+#include <map>
+
 class TreeNode
 {
 public:
@@ -16,7 +18,7 @@ public:
     //
     static bool is_leaf(const TreeNode *node);
     //
-    static void get_huffman_code(const TreeNode *node, std::string code);
+    static void get_huffman_code(const TreeNode *, std::map <char, std::string> &, std::string);
     //
     static void destroy(TreeNode *node);
 

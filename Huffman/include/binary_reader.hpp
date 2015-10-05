@@ -1,0 +1,6 @@
+#ifndef BINARY_READER_HPP
+#define BINARY_READER_HPP
+
+
+
+#endif // BINARY_READER_HPP

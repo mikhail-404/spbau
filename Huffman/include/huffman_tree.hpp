@@ -14,7 +14,7 @@ public:
     //
     ~HuffmanTree();
     //
-    void codes() const;
+    std::map <char, std::string> codes() const;
 
 private:
     //

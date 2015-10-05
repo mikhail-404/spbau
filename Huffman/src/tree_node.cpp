@@ -24,14 +24,16 @@ bool TreeNode::is_leaf(const TreeNode *node)
     return node->m_left == nullptr && node->m_right == nullptr;
 }
 
-void TreeNode::get_huffman_code(const TreeNode *node, std::string code)
+void TreeNode::get_huffman_code(const TreeNode *node, std::map <char, std::string> &mp, std::string code)
 {
     if (is_leaf(node))
-        std::cout << node->value() << ": " << code << std::endl;
+    {
+        mp[node->value()] = code;
+    }
     else
     {
-        get_huffman_code(node->m_left, code + "0");
-        get_huffman_code(node->m_right, code + "1");
+        get_huffman_code(node->m_left, mp, code + "0");
+        get_huffman_code(node->m_right, mp, code + "1");
     }
 }
 
@@ -46,6 +48,7 @@ void TreeNode::destroy(TreeNode *node)
 
 void TreeNode::recursive_print_tree(TreeNode *root, int shift)
 {
+    /*
     if (root)
     {
         if (root->m_left)
@@ -56,4 +59,5 @@ void TreeNode::recursive_print_tree(TreeNode *root, int shift)
         if (root->m_right)
             recursive_print_tree(root->m_right, shift + 3);
     }
+    */
 }
