@@ -10,17 +10,12 @@
 class HuffmanTree
 {
 public:
-    //
     HuffmanTree(const std::map <char, int>&);
-    //
     ~HuffmanTree();
-    //
     std::map <char, std::string> codes() const;
 
 private:
-    //
     TreeNode *m_root;
-    //
     void create_tree_by_dictionary(const std::map <char, int>&);
 };
 

@@ -15,7 +15,6 @@ public:
 
 HuffmanTree::HuffmanTree(const std::map <char, int> &dictionary)
 {
-    //
     m_root = nullptr;
     create_tree_by_dictionary(dictionary);
 }
@@ -23,20 +22,16 @@ HuffmanTree::HuffmanTree(const std::map <char, int> &dictionary)
 HuffmanTree::~HuffmanTree()
 {
     TreeNode::destroy(m_root);
-    std::cout << "Destructor of Huffman tree" << std::endl;
 }
 
 void HuffmanTree::create_tree_by_dictionary(const std::map <char, int> &dictionary)
 {
-    // создадим очередь на минимум
     std::priority_queue <TreeNode*, std::vector <TreeNode*>, TreeNodeComparator> tree_nodes_queue;
-    //
     for(std::map <char, int>::const_iterator it = dictionary.begin(); it != dictionary.end(); ++it)
     {
         tree_nodes_queue.push(new TreeNode(it->first, it->second));
     }
 
-    //
     while (tree_nodes_queue.size() != 1)
     {
         TreeNode *first_min  = tree_nodes_queue.top();

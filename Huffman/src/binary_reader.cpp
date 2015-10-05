@@ -29,14 +29,11 @@ void cut_code(std::string &code, unsigned char last_pos)
 //
 void decoder(std::ifstream &in, std::ofstream &out)
 {
-    //
     char dictionary_size;
     in.read((char*)&dictionary_size, sizeof(dictionary_size));
 
-    //
     std::map <std::string, char> decode_dictionary;
 
-    //
     int code;
     std::string temp_code;
     for(int i = 0; i < (int)dictionary_size; ++i)
@@ -58,18 +55,9 @@ void decoder(std::ifstream &in, std::ofstream &out)
         in.read((char*)&code, sizeof(code));
         if (!in.eof())
         {
-            std::cout << "Code: " << code << std::endl;
             temp_code = temp_code + int_to_binary_format(code);
         }
     }
-
-    //std::cout << "Text: " << temp_code << std::endl;
-
-    for(std::map <std::string, char>::iterator it = decode_dictionary.begin(); it != decode_dictionary.end(); ++it)
-    {
-        //std::cout << it->first << " -> " << it->second << std::endl;
-    }
-    std::cout << "=======================" << std::endl;
 
     std::string current(""), res("");
     for(size_t i = 0; i < temp_code.length(); ++i)
@@ -77,10 +65,9 @@ void decoder(std::ifstream &in, std::ofstream &out)
         current += temp_code[i];
         if (decode_dictionary.find(current) != decode_dictionary.end())
         {
-            //std::cout << current << " " << decode_dictionary[current] << std::endl;
             res += decode_dictionary[current];
             current.clear();
         }
     }
-    std::cout << "Res: " << res << std::endl;
+    out << res;
 }

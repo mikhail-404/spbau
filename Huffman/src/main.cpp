@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
 {
     //
     GetOptions options(argc, argv);
-
     //
     std::string input_file, output_file;
     input_file  = options.input_file();
@@ -23,7 +22,7 @@ int main(int argc, char *argv[])
         //
         if (options.is_compress())
         {
-            std::cout << "Encode" << std::endl;
+            //std::cout << "Encode" << std::endl;
             encoder(in, out);
         }
         else if (options.is_uncompress())
