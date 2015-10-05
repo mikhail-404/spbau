@@ -2,9 +2,9 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/au_huffman.dir/src/huffman_tree.cpp.o"
   "CMakeFiles/au_huffman.dir/src/main.cpp.o"
   "CMakeFiles/au_huffman.dir/src/tree_node.cpp.o"
+  "CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o"
   "CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o"
   "CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o"
-  "CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o"
   "au_huffman.pdb"
   "au_huffman"
 )

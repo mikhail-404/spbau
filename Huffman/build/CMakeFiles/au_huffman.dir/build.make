@@ -121,9 +121,32 @@ CMakeFiles/au_huffman.dir/src/tree_node.cpp.o.provides: CMakeFiles/au_huffman.di
 
 CMakeFiles/au_huffman.dir/src/tree_node.cpp.o.provides.build: CMakeFiles/au_huffman.dir/src/tree_node.cpp.o
 
+CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o: CMakeFiles/au_huffman.dir/flags.make
+CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o: ../src/bits_operations.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/mikhail/Programming/C++/Huffman/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o -c /home/mikhail/Programming/C++/Huffman/src/bits_operations.cpp
+
+CMakeFiles/au_huffman.dir/src/bits_operations.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/au_huffman.dir/src/bits_operations.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/mikhail/Programming/C++/Huffman/src/bits_operations.cpp > CMakeFiles/au_huffman.dir/src/bits_operations.cpp.i
+
+CMakeFiles/au_huffman.dir/src/bits_operations.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/au_huffman.dir/src/bits_operations.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/mikhail/Programming/C++/Huffman/src/bits_operations.cpp -o CMakeFiles/au_huffman.dir/src/bits_operations.cpp.s
+
+CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires:
+.PHONY : CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires
+
+CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires
+	$(MAKE) -f CMakeFiles/au_huffman.dir/build.make CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides.build
+.PHONY : CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides
+
+CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides.build: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o
+
 CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o: CMakeFiles/au_huffman.dir/flags.make
 CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o: ../src/binary_writer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/mikhail/Programming/C++/Huffman/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/mikhail/Programming/C++/Huffman/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o -c /home/mikhail/Programming/C++/Huffman/src/binary_writer.cpp
 
@@ -146,7 +169,7 @@ CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o.provides.build: CMakeFiles/au_
 
 CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o: CMakeFiles/au_huffman.dir/flags.make
 CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o: ../src/binary_reader.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/mikhail/Programming/C++/Huffman/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/mikhail/Programming/C++/Huffman/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o -c /home/mikhail/Programming/C++/Huffman/src/binary_reader.cpp
 
@@ -167,37 +190,14 @@ CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o.provides: CMakeFiles/au_huffma
 
 CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o.provides.build: CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o
 
-CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o: CMakeFiles/au_huffman.dir/flags.make
-CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o: ../src/bits_operations.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/mikhail/Programming/C++/Huffman/build/CMakeFiles $(CMAKE_PROGRESS_6)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o -c /home/mikhail/Programming/C++/Huffman/src/bits_operations.cpp
-
-CMakeFiles/au_huffman.dir/src/bits_operations.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/au_huffman.dir/src/bits_operations.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/mikhail/Programming/C++/Huffman/src/bits_operations.cpp > CMakeFiles/au_huffman.dir/src/bits_operations.cpp.i
-
-CMakeFiles/au_huffman.dir/src/bits_operations.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/au_huffman.dir/src/bits_operations.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/mikhail/Programming/C++/Huffman/src/bits_operations.cpp -o CMakeFiles/au_huffman.dir/src/bits_operations.cpp.s
-
-CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires:
-.PHONY : CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires
-
-CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires
-	$(MAKE) -f CMakeFiles/au_huffman.dir/build.make CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides.build
-.PHONY : CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides
-
-CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.provides.build: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o
-
 # Object files for target au_huffman
 au_huffman_OBJECTS = \
 "CMakeFiles/au_huffman.dir/src/huffman_tree.cpp.o" \
 "CMakeFiles/au_huffman.dir/src/main.cpp.o" \
 "CMakeFiles/au_huffman.dir/src/tree_node.cpp.o" \
+"CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o" \
 "CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o" \
-"CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o" \
-"CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o"
+"CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o"
 
 # External object files for target au_huffman
 au_huffman_EXTERNAL_OBJECTS =
@@ -205,9 +205,9 @@ au_huffman_EXTERNAL_OBJECTS =
 au_huffman: CMakeFiles/au_huffman.dir/src/huffman_tree.cpp.o
 au_huffman: CMakeFiles/au_huffman.dir/src/main.cpp.o
 au_huffman: CMakeFiles/au_huffman.dir/src/tree_node.cpp.o
+au_huffman: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o
 au_huffman: CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o
 au_huffman: CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o
-au_huffman: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o
 au_huffman: CMakeFiles/au_huffman.dir/build.make
 au_huffman: CMakeFiles/au_huffman.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable au_huffman"
@@ -220,9 +220,9 @@ CMakeFiles/au_huffman.dir/build: au_huffman
 CMakeFiles/au_huffman.dir/requires: CMakeFiles/au_huffman.dir/src/huffman_tree.cpp.o.requires
 CMakeFiles/au_huffman.dir/requires: CMakeFiles/au_huffman.dir/src/main.cpp.o.requires
 CMakeFiles/au_huffman.dir/requires: CMakeFiles/au_huffman.dir/src/tree_node.cpp.o.requires
+CMakeFiles/au_huffman.dir/requires: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires
 CMakeFiles/au_huffman.dir/requires: CMakeFiles/au_huffman.dir/src/binary_writer.cpp.o.requires
 CMakeFiles/au_huffman.dir/requires: CMakeFiles/au_huffman.dir/src/binary_reader.cpp.o.requires
-CMakeFiles/au_huffman.dir/requires: CMakeFiles/au_huffman.dir/src/bits_operations.cpp.o.requires
 .PHONY : CMakeFiles/au_huffman.dir/requires
 
 CMakeFiles/au_huffman.dir/clean:

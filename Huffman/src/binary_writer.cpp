@@ -1,11 +1,11 @@
-#include "../include/binary_writer.hpp"
-#include "../include/huffman_tree.hpp"
-#include "../include/features.hpp"
-#include "../include/bits_operations.hpp"
-
 #include <map>
 #include <string>
 #include <iostream>
+
+#include "../include/binary_writer.hpp"
+#include "../include/huffman_tree.hpp"
+#include "../include/bits_operations.hpp"
+#include "../include/features.hpp"
 
 int convert(const std::string &code_string)
 {
@@ -36,6 +36,31 @@ void binary_write_table_frequency(std::ofstream &out, const std::map <char, std:
     std::cout << "Done" << std::endl;
 }
 
+void binary_write_text(std::ifstream &in, std::ofstream &out, std::map <char, std::string> dictionary)
+{
+    in.seekg(0, std::ios::beg);
+    std::string temp("");
+    char current_char;
+    int current_number = 0;
+
+    while (in >> current_char)
+    {
+        temp += dictionary[current_char];
+        if (temp.length() / BITS_SIZE)
+        {
+            std::string tmp(temp, 0, BITS_SIZE);
+            current_number = convert(tmp);
+            out.write((char*)&current_number, sizeof(current_number));
+            temp.erase(0, BITS_SIZE);
+        }
+    }
+    if (temp.length() > 0)
+    {
+        current_number = convert(temp);
+        out.write((char*)&current_number, sizeof(current_number));
+    }
+}
+
 void encoder(std::ifstream &in, std::ofstream &out)
 {
     std::map <char, int> dictionary;
@@ -51,4 +76,5 @@ void encoder(std::ifstream &in, std::ofstream &out)
     std::map <char, std::string> code_table = huffman_tree.codes();
     // записываем таблицу в бинарный файл с признаком конца записи
     binary_write_table_frequency(out, code_table);
+    binary_write_text(in, out, code_table);
 }

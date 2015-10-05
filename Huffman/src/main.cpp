@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     std::ofstream out("../output", std::ios::binary | std::ios::out);
 
     encoder(in, out);
+    
     in.close();
     out.close();
 
