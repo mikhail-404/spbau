@@ -23,6 +23,7 @@ HuffmanTree::HuffmanTree(const std::map <char, int> &dictionary)
 HuffmanTree::~HuffmanTree()
 {
     TreeNode::destroy(m_root);
+    std::cout << "Destructor of Huffman tree" << std::endl;
 }
 
 void HuffmanTree::create_tree_by_dictionary(const std::map <char, int> &dictionary)

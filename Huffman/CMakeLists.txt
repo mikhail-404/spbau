@@ -10,6 +10,9 @@ set (SOURCE
     src/huffman_tree.cpp
     src/main.cpp
     src/tree_node.cpp
+    src/binary_writer.cpp
+    src/binary_reader.cpp
+    src/bits_operations.cpp
 )
 
 add_executable(au_huffman ${SOURCE})

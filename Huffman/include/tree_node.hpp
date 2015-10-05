@@ -1,6 +1,7 @@
 #ifndef TREE_NODE_HPP
 #define TREE_NODE_HPP
 
+#include <string>
 #include <map>
 
 class TreeNode

@@ -2,18 +2,24 @@
 #include <fstream>
 #include <string>
 
-#include "../include/huffman_tree.hpp"
+#include "../include/binary_writer.hpp"
 #include <map>
 
 int main(int argc, char *argv[])
 {
-    std::string source_string(argv[1]);
-    std::map <char, int> dictionary;
-    for(size_t i = 0; i < source_string.length(); ++i)
-        ++dictionary[source_string[i]];
+    std::ifstream in("../input", std::ios::in);
 
-    HuffmanTree tree(dictionary);
-    tree.codes();
+    if (!in.is_open())
+    {
+        std::cout << "File is not found" << std::endl;
+        return -1;
+    }
+
+    std::ofstream out("../output", std::ios::binary | std::ios::out);
+
+    encoder(in, out);
+    in.close();
+    out.close();
 
     return 0;
 }
