@@ -36,28 +36,35 @@ void decoder(std::ifstream &in, std::ofstream &out)
 
     int code;
     std::string temp_code;
+    std::cout << "==== decode =======" << std::endl;
     for(int i = 0; i < (int)dictionary_size; ++i)
     {
         char current_char, size_code;
         in.read((char*)&current_char, sizeof(current_char));
-        in.read((char*)&size_code, sizeof(size_code));
-        in.read((char*)&code, sizeof(code));
+        in.read((char*)&size_code,    sizeof(size_code)   );
+        in.read((char*)&code,         sizeof(code)        );
 
         temp_code = int_to_binary_format(code);
         cut_code(temp_code, (int)size_code);
         decode_dictionary[temp_code] = current_char;
-        //std::cout << current_char << ": " << temp_code << std::endl;
+        std::cout << current_char << ": " << temp_code << std::endl;
     }
+    std::cout << "=================" << std::endl;
 
     temp_code = "";
+    unsigned long t = 0;
     while (!in.eof())
     {
         in.read((char*)&code, sizeof(code));
         if (!in.eof())
         {
+            std::cout << "Current number: " << code << std::endl;
+            t += code;
             temp_code = temp_code + int_to_binary_format(code);
         }
     }
+
+    std::cout << "Sum = " << t << std::endl;
 
     std::string current(""), res("");
     for(size_t i = 0; i < temp_code.length(); ++i)

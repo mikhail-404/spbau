@@ -3,6 +3,8 @@
 GetOptions::GetOptions(int argc, char *argv[])
 {
     init(argc, argv);
+    m_compress   = false;
+    m_uncompress = false;
 }
 
 void GetOptions::init(int argc, char *argv[])
@@ -18,6 +20,7 @@ void GetOptions::init(int argc, char *argv[])
 
     if (vm.count("help"))
     {
+        std::cout << desc << std::endl;
         return;
     }
 

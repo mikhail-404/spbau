@@ -25,6 +25,7 @@ void binary_write_table_frequency(std::ofstream &out, const std::map <char, std:
 {
     char dictionary_size = static_cast <char>(dictionary.size());
     out.write((char*)&dictionary_size, sizeof(dictionary_size));
+    std::cout << "====== write ===========" << std::endl;
     for(std::map <char, std::string>::const_iterator it = dictionary.begin(); it != dictionary.end(); ++it)
     {
         out.write((char*)&(it->first), sizeof(it->first));
@@ -32,7 +33,9 @@ void binary_write_table_frequency(std::ofstream &out, const std::map <char, std:
         out.write((char*)&code_size, sizeof(code_size));
         int convert_code_string = convert(it->second);
         out.write((char*)&convert_code_string, sizeof(convert_code_string));
+        std::cout << it->first << " -> " << it->second << std::endl;
     }
+    std::cout << "=================" << std::endl;
 }
 
 void binary_write_text(std::ifstream &in, std::ofstream &out, std::map <char, std::string> dictionary)
@@ -42,7 +45,7 @@ void binary_write_text(std::ifstream &in, std::ofstream &out, std::map <char, st
     int current_number = 0;
 
     in.seekg(0, std::ios::beg);
-
+    unsigned long t = 0;
     while (in.read(&current_char, 1))
     {
         temp += dictionary[current_char];
@@ -50,6 +53,8 @@ void binary_write_text(std::ifstream &in, std::ofstream &out, std::map <char, st
         {
             std::string tmp(temp, 0, BITS_SIZE);
             current_number = convert(tmp);
+            t += current_number;
+            std::cout << "Current number: " << current_number << std::endl;
             out.write((char*)&current_number, sizeof(current_number));
             temp.erase(0, BITS_SIZE);
         }
@@ -58,8 +63,11 @@ void binary_write_text(std::ifstream &in, std::ofstream &out, std::map <char, st
     if (temp.length() > 0)
     {
         current_number = convert(temp);
+        t += current_number;
+        std::cout << "Current number: " << current_number << std::endl;
         out.write((char*)&current_number, sizeof(current_number));
     }
+    std::cout << "Sum = " << t << std::endl;
 }
 
 void encoder(std::ifstream &in, std::ofstream &out)
