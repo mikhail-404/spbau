@@ -45,3 +45,12 @@ void TreeNode::create_path(TreeNode *node, const std::string &path, uint8_t char
     current_pointer->m_value = char_code;
     node = current_pointer;
 }
+
+void TreeNode::destroy(TreeNode* node)
+{
+    if (!node)
+        return;
+    destroy(node->m_left);
+    destroy(node->m_right);
+    delete node;
+}

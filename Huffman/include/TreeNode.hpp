@@ -17,6 +17,8 @@ public:
     static void recursive_print(TreeNode*, size_t, const std::string, std::vector <std::string> &);
     static void create_path    (TreeNode*, const std::string &, uint8_t);
 
+    static void destroy(TreeNode*);
+
     uint8_t   m_value;
     size_t    m_total_sum = 0;
     TreeNode* m_left;

@@ -2,6 +2,7 @@
 #include "HuffmanCodeException.hpp"
 
 #include <vector>
+#include <iostream>
 
 HuffmanCode::HuffmanCode(const std::string &input_filename, const std::string &output_filename)
     : m_input_file(input_filename), m_output_file(output_filename)
@@ -18,13 +19,19 @@ void HuffmanCode::encode()
         throw FileIsNotFoundException("File is not found!");
     }
 
+    size_t source_file_size = 0;
+    size_t output_file_size = 0;
+    size_t helper_data_size = 0;
+
     std::vector <size_t> statistics(MAX_TABLE, 0);
+
     uint8_t current_byte;
     while (!in.eof())
     {
         current_byte = in.get();
         if (!in.eof())
         {
+            ++source_file_size;
             ++statistics[current_byte];
         }
     }
@@ -63,7 +70,10 @@ void HuffmanCode::encode()
         TreeNode::print(result_node, code_results);
     }
 
+    TreeNode::destroy(result_node);
+
     out.write((char*)&count_nodes, sizeof(count_nodes));
+    output_file_size += sizeof(count_nodes);
 
     for(size_t i = 0; i < code_results.size(); ++i)
         if (!code_results[i].empty())
@@ -74,7 +84,13 @@ void HuffmanCode::encode()
             out.write((char*)&length_byte, sizeof(length_byte));
             uint64_t result_number = convert_to_ulong(code_results[i]);
             out.write((char*)&result_number, sizeof(result_number));
+
+            output_file_size += sizeof(current_byte);
+            output_file_size += sizeof(length_byte);
+            output_file_size += sizeof(result_number);
         }
+
+    helper_data_size += output_file_size;
 
     in.clear();
     in.seekg(0, std::ios::beg);
@@ -99,6 +115,9 @@ void HuffmanCode::encode()
         std::string temp_code(accumulate_result_string, i * 64, 64);
         result_number_code = convert_to_ulong(temp_code);
         out.write((char*)&result_number_code, sizeof(result_number_code));
+
+        output_file_size += sizeof(length);
+        output_file_size += sizeof(result_number_code);
     }
 
     if (accumulate_result_string.length() % 64)
@@ -108,10 +127,17 @@ void HuffmanCode::encode()
         result_number_code = convert_to_ulong(temp_code);
         out.write((char *) &length, sizeof(length));
         out.write((char *) &result_number_code, sizeof(result_number_code));
+
+        output_file_size += sizeof(length);
+        output_file_size += sizeof(result_number_code);
     }
 
     in.close();
     out.close();
+
+    std::cout << source_file_size << std::endl;
+    std::cout << output_file_size << std::endl;
+    std::cout << helper_data_size << std::endl;
 }
 
 void HuffmanCode::decode()
@@ -124,8 +150,13 @@ void HuffmanCode::decode()
         throw FileIsNotFoundException("File is not found!");
     }
 
+    size_t source_file_size = 0;
+    size_t output_file_size = 0;
+    size_t helper_data_size = 0;
+
     size_t table_size = 0;
     in.read((char*)&table_size, sizeof(table_size));
+    source_file_size += sizeof(table_size);
 
     TreeNode* huffman_tree = new TreeNode();
 
@@ -139,7 +170,13 @@ void HuffmanCode::decode()
         in.read((char*)&result_number_cur, sizeof(result_number_cur));
         std::string result = convert_to_string(result_number_cur, current_length);
         TreeNode::create_path(huffman_tree, result, current_char);
+
+        source_file_size += sizeof(current_char);
+        source_file_size += sizeof(current_length);
+        source_file_size += sizeof(result_number_cur);
     }
+
+    helper_data_size += source_file_size;
 
     std::string result_string_decode("");
     uint8_t length;
@@ -152,12 +189,15 @@ void HuffmanCode::decode()
         {
             std::string code_number = convert_to_string(result_number_code, length);
             result_string_decode += code_number;
+            source_file_size += sizeof(length);
+            source_file_size += sizeof(result_number_code);
         }
     }
 
     in.close();
 
     std::vector <std::string> code_results(MAX_TABLE, "");
+
     TreeNode::print(huffman_tree, code_results);
 
     TreeNode* temp = huffman_tree;
@@ -170,6 +210,7 @@ void HuffmanCode::decode()
             uint8_t current_leaf_node_value = temp->m_value;
             out.write((char*)&current_leaf_node_value, sizeof(current_leaf_node_value));
             temp = huffman_tree;
+            output_file_size += sizeof(current_leaf_node_value);
         }
 
         if (result_string_decode[index] == '0')
@@ -179,5 +220,10 @@ void HuffmanCode::decode()
         ++index;
     }
 
+    TreeNode::destroy(huffman_tree);
     out.close();
+
+    std::cout << source_file_size << std::endl;
+    std::cout << output_file_size << std::endl;
+    std::cout << helper_data_size << std::endl;
 }
