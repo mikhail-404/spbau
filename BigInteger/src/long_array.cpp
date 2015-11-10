@@ -2,8 +2,8 @@
 #include <stdexcept>
 
 long_array::long_array()
-    : m_array(new uint32_t [100]),
-      m_capacity(100),
+    : m_array(new uint32_t [2]),
+      m_capacity(2),
       m_size(0)
 {
     fill_range(0, m_capacity);
@@ -69,6 +69,18 @@ long_array& long_array::operator= (const long_array &array)
 long_array::~long_array()
 {
     delete []m_array;
+}
+
+void long_array::reserve(size_t size)
+{
+    uint32_t *temp = new uint32_t [size];
+    copy_array(temp, m_array, m_size);
+    delete []m_array;
+    m_capacity = size;
+    m_array = new uint32_t [m_capacity];
+    copy_array(m_array, temp, m_size);
+    delete []temp;
+    m_size = size;
 }
 
 void long_array::push_back(int value)

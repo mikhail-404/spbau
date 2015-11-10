@@ -31,6 +31,31 @@ void lint::swap(lint &number)
     std::swap(m_sign, number.m_sign);
 }
 
+void lint::level_up()
+{
+    size_t size = m_array.size();
+    m_array.reserve(size + 1);
+    for(size_t i = size - 1; i >= 1; --i)
+        m_array[i] = m_array[i - 1];
+}
+
+lint lint::add(const lint &a, const lint &b)
+{
+    lint temp(a);
+    size_t carry = 0, i = 0;
+    while (i < std::max(temp.m_array.size(), b.m_array.size()) || carry)
+    {
+        if (i == temp.m_array.size())
+            temp.m_array.push_back(0);
+        temp.m_array[i] += carry + (i < b.m_array.size() ? b.m_array[i] : 0);
+        carry = temp.m_array[i] >= temp.m_base;
+        if (carry)
+            temp.m_array[i] -= temp.m_base;
+        ++i;
+    }
+    return temp;
+}
+
 // +
 lint& lint::operator= (const lint &big_number)
 {
@@ -72,8 +97,13 @@ lint::lint(const std::string &string_number)
             m_array.push_back(str_to_int(number.substr(i - m_base_degree, m_base_degree)));
 }
 
+// +
 lint &lint::operator= (int int_number)
 {
+    lint temp(std::abs(int_number));
+    swap(temp);
+    if (int_number < 0)
+        m_sign = -1;
     return *this;
 }
 
@@ -82,8 +112,11 @@ lint &lint::operator= (double int_number)
     return *this;
 }
 
+// +
 lint& lint::operator= (std::string string_number)
 {
+    lint temp(string_number);
+    swap(temp);
     return *this;
 }
 
@@ -151,7 +184,14 @@ lint& lint::operator++ ()
 // +
 lint& lint::operator-- ()
 {
-    *this -= 1;
+    if (m_sign < 0)
+    {
+        char sign = m_sign;
+        *this = abs(*this) + 1;
+        m_sign = sign;
+    }
+    else
+        *this -= 1;
     return *this;
 }
 
@@ -167,7 +207,7 @@ lint lint::operator++ (int)
 lint lint::operator-- (int)
 {
     lint temp(*this);
-    *this -= 1;
+    --*this;
     return temp;
 }
 
@@ -185,28 +225,58 @@ lint lint::operator-()
     return temp;
 }
 
-// positive + positive
+// +
 lint lint::operator+ (const lint &a)
 {
-    lint temp(*this);
-    size_t carry = 0, i = 0;
-    while (i < std::max(temp.m_array.size(), a.m_array.size()) || carry)
+    if (m_sign > 0 && a.m_sign > 0)
+        return add(*this, a);
+    if (m_sign < 0 && a.m_sign < 0)
     {
-        if (i == temp.m_array.size())
-            temp.m_array.push_back(0);
-        temp.m_array[i] += carry + (i < a.m_array.size() ? a.m_array[i] : 0);
-        carry = temp.m_array[i] >= temp.m_base;
-        if (carry)
-            temp.m_array[i] -= temp.m_base;
-        ++i;
+        lint temp = add(*this, a);
+        temp.m_sign = -1;
+        return temp;
     }
-    return temp;
+    if (*this < a)
+    {
+        if (abs(*this) > a)
+        {
+            lint b(abs(*this));
+            b -= a;
+            b.m_sign = -1;
+            return b;
+        }
+        else
+        {
+            lint b(a);
+            b -= abs(*this);
+            b.m_sign = 1;
+            return b;
+        }
+    }
+    if (*this >= a)
+    {
+        if (*this > abs(a))
+        {
+            lint b(*this);
+            b -= abs(a);
+            b.m_sign = 1;
+            return b;
+        }
+        else
+        {
+            lint b(abs(a));
+            b -= *this;
+            b.m_sign = -1;
+            return b;
+        }
+    }
+    return *this;
 }
 
 // positive a - positive b (a > b)
 lint lint::operator- (const lint &a)
 {
-    lint temp(*this);
+    lint temp(*this);    
     size_t carry = 0, i = 0;
     while (i < a.m_array.size() || carry)
     {
@@ -221,19 +291,62 @@ lint lint::operator- (const lint &a)
     return temp;
 }
 
+// +
 lint lint::operator* (const lint &a)
 {
-    lint temp(a);
+    lint temp;
+    temp.m_array.reserve(m_array.size() + a.m_array.size() + 1);
+    int size = static_cast <int>(a.m_array.size());
+    for(size_t i = 0; i < m_array.size(); ++i)
+    {
+        int j = 0, carry = 0;
+        while (j < size || carry)
+        {
+            uint64_t current = temp.m_array[i + j] + m_array[i] * 1ll * (j < size ? a.m_array[j] : 0) + carry;
+            temp.m_array[i + j] = current % m_base;
+            carry = current / m_base;
+            ++j;
+        }
+    }
+    while (temp.m_array.size() > 1 && temp.m_array.back() == 0)
+        temp.m_array.pop_back();
+    temp.m_sign = m_sign * a.m_sign;
     return temp;
 }
 
-lint lint::operator/ (const lint &a)
+lint lint::operator/ (lint a)
 {
-    lint temp(a);
-    return temp;
+    lint result, current;
+    for(int i = m_array.size() - 1; i >= 0; --i)
+    {
+        current.level_up();
+        current.m_array[0] = m_array[i];
+        int value = 0, left = 0, right = m_base;
+        while (left <= right)
+        {
+            int middle = (left + right) >> 1;
+            lint cur = a * middle;
+            if (cur <= current)
+            {
+                value = middle;
+                left = middle + 1;
+            }
+            else
+            {
+                right = middle - 1;
+            }
+            result.m_array[i] = value;
+            current = current - a * value;
+        }
+        int pos = m_array.size();
+        while (pos >= 0 && !result.m_array[pos])
+            --pos;
+        result.m_array.push_back(0);
+    }
+    return result;
 }
 
-// positive *this + int a
+// +
 lint lint::operator+ (int a)
 {
     lint temp(*this);
@@ -250,16 +363,47 @@ lint lint::operator- (const int a)
     return temp;
 }
 
+// +
 lint lint::operator* (const int a)
 {
     lint temp(*this);
+    lint b(a);
+    temp = temp * b;
     return temp;
 }
 
 lint lint::operator/ (const int a)
 {
-    lint temp(*this);
-    return temp;
+    lint temp(a);
+    return *this / temp;
+}
+
+// +
+lint operator+ (const int a, const lint &b)
+{
+    lint temp(a);
+    return temp + b;
+}
+
+// +
+lint operator- (const int a, const lint &b)
+{
+    lint temp(a);
+    return temp - b;
+}
+
+// +
+lint operator* (const int a, const lint &b)
+{
+    lint temp(a);
+    return temp * b;
+}
+
+// +
+lint operator/ (const int a, const lint &b)
+{
+    lint temp(a);
+    return temp / b;
 }
 
 lint& lint::operator += (const lint &number)
@@ -274,6 +418,7 @@ lint& lint::operator -= (const lint &number)
     return *this;
 }
 
+// +
 lint& lint::operator *= (const lint &number)
 {
     *this = *this * number;
@@ -292,13 +437,13 @@ lint& lint::operator+= (const int a)
     return *this;
 }
 
-lint& lint::operator-=(const int a)
+lint& lint::operator-= (const int a)
 {
     *this = *this - a;
     return *this;
 }
 
-lint& lint::operator*=(const int a)
+lint& lint::operator*= (const int a)
 {
     *this = *this * a;
     return *this;
@@ -311,8 +456,22 @@ lint& lint::operator/=(const int a)
 }
 
 // +
-bool lint::operator< (const lint &number) const
+bool lint::operator< (lint number) const
 {
+    if (m_sign < number.m_sign)
+        return true;
+
+    if (m_sign > number.m_sign)
+        return false;
+
+    if (m_sign < 0 && number.m_sign < 0)
+    {
+        lint temp(*this);
+        temp.m_sign = number.m_sign = 1;
+        temp.swap(number);
+        return temp < number;
+    }
+
     if (m_array.size() < number.m_array.size())
         return true;
     if (m_array.size() > number.m_array.size())
@@ -328,25 +487,25 @@ bool lint::operator< (const lint &number) const
 }
 
 // +
-bool lint::operator> (const lint &number) const
+bool lint::operator> (lint number) const
 {
     return number < *this;
 }
 
 // +
-bool lint::operator<= (const lint &number) const
+bool lint::operator<= (lint number) const
 {
     return *this < number || !(number < *this);
 }
 
 // +
-bool lint::operator>= (const lint &number) const
+bool lint::operator>= (lint number) const
 {
     return number <= *this;
 }
 
 // +
-bool lint::operator== (const lint &number) const
+bool lint::operator== (lint number) const
 {
     if (m_array.size() != number.m_array.size())
         return false;
@@ -354,7 +513,7 @@ bool lint::operator== (const lint &number) const
 }
 
 // +
-bool lint::operator!= (const lint &number) const
+bool lint::operator!= (lint number) const
 {
     return !(*this == number);
 }

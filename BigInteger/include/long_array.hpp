@@ -15,6 +15,7 @@ public:
     long_array& operator= (const long_array &array);
     ~long_array();
     //
+    void reserve(size_t size);
     void push_back(int value);
     uint32_t back() const;
     void pop_back();

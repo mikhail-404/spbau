@@ -7,12 +7,13 @@ int main()
 {
     try
     {
-        const std::string n("10000000004");
-        const std::string m("1");
+        const std::string n("12");
+        const std::string m("3");
         lint a(n);
         lint b(m);
-        a -= 100000011;
-        std::cout << a << std::endl;
+        lint c = a / b;
+        std::cout << c << std::endl;
+        //std::cout << std::numeric_limits <double>::max() << std::endl;
     }
     catch (std::exception &e)
     {

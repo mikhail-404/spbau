@@ -25,45 +25,38 @@ public:
     lint& operator= (std::string string_number);
     //
     operator uint64_t();
-    operator int();
-    operator bool();
+    operator int     ();
+    operator bool    ();
     //
     std::string to_string() const;
     //
     lint& operator++ ();
     lint& operator-- ();
-    lint operator++ (int);
-    lint operator-- (int);
+    lint  operator++ (int);
+    lint  operator-- (int);
     //
     lint operator+ ();
     lint operator- ();
     //
-    lint operator+ (const lint &a);
-    lint operator- (const lint &a);
-    lint operator* (const lint &a);
-    lint operator/ (const lint &a);
-    //
-    lint operator- (int a);
+    lint operator- (const int a);
     lint operator+ (const int a);
     lint operator* (const int a);
     lint operator/ (const int a);
     //
-    lint& operator+= (const lint &number);
-    lint& operator-= (const lint &number);
-    lint& operator*= (const lint &number);
-    lint& operator/= (const lint &number);
+    lint operator+ (const lint &a);
+    lint operator- (const lint &a);
+    lint operator* (const lint &a);
+    lint operator/ (lint a);
     //
     lint& operator+= (const int a);
     lint& operator-= (const int a);
     lint& operator*= (const int a);
     lint& operator/= (const int a);
     //
-    bool operator<  (const lint &number) const; // +
-    bool operator>  (const lint &number) const; // +
-    bool operator<= (const lint &number) const; // +
-    bool operator>= (const lint &number) const; // +
-    bool operator== (const lint &number) const; // +
-    bool operator!= (const lint &number) const; // +
+    lint& operator+= (const lint &number);
+    lint& operator-= (const lint &number);
+    lint& operator*= (const lint &number);
+    lint& operator/= (const lint &number);
     //
     bool operator<  (int number) const;
     bool operator>  (int number) const;
@@ -71,6 +64,13 @@ public:
     bool operator>= (int number) const;
     bool operator== (int number) const;
     bool operator!= (int number) const;
+    //
+    bool operator<  (lint number) const; // +
+    bool operator>  (lint number) const; // +
+    bool operator<= (lint number) const; // +
+    bool operator>= (lint number) const; // +
+    bool operator== (lint number) const; // +
+    bool operator!= (lint number) const; // +
     //
     friend std::istream& operator>> (std::istream &ist, lint &number);
     friend std::ostream& operator<< (std::ostream &ost, const lint &number);  // +
@@ -81,6 +81,8 @@ private:
     void copy_lint(const lint &number);
     void set_abs();
     void swap(lint &number);
+    void level_up();
+    lint add(const lint &a, const lint &b);
 
 private:
     long_array       m_array;
@@ -91,5 +93,10 @@ private:
 
 uint32_t    str_to_int(const std::string &number);
 std::string int_to_str(uint32_t number);
+
+lint operator+ (const int a, const lint &b);
+lint operator- (const int a, const lint &b);
+lint operator* (const int a, const lint &b);
+lint operator/ (const int a, const lint &b);
 
 #endif // LINT_HPP
