@@ -10,15 +10,9 @@ int main()
         const std::string n("10000000004");
         const std::string m("1");
         lint a(n);
-        lint b(-1111111111);
-        std::string result = b.to_string();
-        if (b)
-        {
-            std::cout << "true" << std::endl;
-        }
-        else
-            std::cout << "false" << std::endl;
-        std::cout << result << std::endl;
+        lint b(m);
+        a -= 100000011;
+        std::cout << a << std::endl;
     }
     catch (std::exception &e)
     {

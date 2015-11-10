@@ -16,11 +16,16 @@ public:
     lint& operator= (const lint &big_number);
     ~lint();
     //
-    explicit lint(int int_number);
-    lint(double doulbe_number);
+    lint(int int_number);
+    lint(double double_number);
     lint(const std::string &string_number);
     //
+    lint& operator= (int int_number);
+    lint& operator= (double double_number);
+    lint& operator= (std::string string_number);
+    //
     operator uint64_t();
+    operator int();
     operator bool();
     //
     std::string to_string() const;
@@ -60,6 +65,13 @@ public:
     bool operator== (const lint &number) const; // +
     bool operator!= (const lint &number) const; // +
     //
+    bool operator<  (int number) const;
+    bool operator>  (int number) const;
+    bool operator<= (int number) const;
+    bool operator>= (int number) const;
+    bool operator== (int number) const;
+    bool operator!= (int number) const;
+    //
     friend std::istream& operator>> (std::istream &ist, lint &number);
     friend std::ostream& operator<< (std::ostream &ost, const lint &number);  // +
     friend lint abs(const lint &number); // +
@@ -68,6 +80,7 @@ public:
 private:
     void copy_lint(const lint &number);
     void set_abs();
+    void swap(lint &number);
 
 private:
     long_array       m_array;

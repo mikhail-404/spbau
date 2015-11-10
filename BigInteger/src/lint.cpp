@@ -1,4 +1,5 @@
 #include "lint.hpp"
+#include <cmath>
 
 //
 lint::lint()
@@ -18,15 +19,23 @@ void lint::set_abs()
     m_sign = 1;
 }
 
+// +
 lint::lint(const lint &big_number)
 {
    copy_lint(big_number);
 }
 
+void lint::swap(lint &number)
+{
+    std::swap(m_array, number.m_array);
+    std::swap(m_sign, number.m_sign);
+}
+
 // +
 lint& lint::operator= (const lint &big_number)
 {
-    copy_lint(big_number);
+    //copy_lint(big_number);
+    lint(big_number).swap(*this);
     return *this;
 }
 
@@ -43,8 +52,9 @@ lint::lint(int int_number)
     m_array.push_back(std::abs(int_number));
 }
 
-lint::lint(double doulbe_number)
+lint::lint(double double_number)
 {
+    m_sign = double_number > 0.0 ? 1 : (double_number < 0.0 ? -1 : 0);
 }
 
 // +
@@ -62,8 +72,29 @@ lint::lint(const std::string &string_number)
             m_array.push_back(str_to_int(number.substr(i - m_base_degree, m_base_degree)));
 }
 
+lint &lint::operator= (int int_number)
+{
+    return *this;
+}
+
+lint &lint::operator= (double int_number)
+{
+    return *this;
+}
+
+lint& lint::operator= (std::string string_number)
+{
+    return *this;
+}
+
+lint::operator int()
+{
+    return 0;
+}
+
 lint::operator uint64_t()
 {
+    //uint64_t max_uint64 = std::numeric_limits <uint64_t>::max();
 
     return 0;
 }
@@ -97,6 +128,7 @@ std::string lint::to_string() const
     return result;
 }
 
+//
 std::istream& operator>> (std::istream &ist, lint &number)
 {
     return ist;
@@ -205,26 +237,16 @@ lint lint::operator/ (const lint &a)
 lint lint::operator+ (int a)
 {
     lint temp(*this);
-    size_t i = 0;
-    while (i < temp.m_array.size() - 1 && temp.m_array[i] + a >= m_base)
-    {
-        temp.m_array[i] = 0;
-        std::cout << temp.m_array[i] << std::endl;
-        a -= m_base - temp.m_array[i];
-        ++i;
-    }
-
-    if (i < temp.m_array.size())
-        temp.m_array[i] += a;
-    else
-        temp.m_array.push_back(1);
-
+    lint b(a);
+    temp = temp + b;
     return temp;
 }
 
 lint lint::operator- (const int a)
 {
     lint temp(*this);
+    lint b(a);
+    temp = temp - b;
     return temp;
 }
 
@@ -337,6 +359,37 @@ bool lint::operator!= (const lint &number) const
     return !(*this == number);
 }
 
+bool lint::operator< (int number) const
+{
+    return false;
+}
+
+bool lint::operator> (int number) const
+{
+    return false;
+}
+
+bool lint::operator<= (int number) const
+{
+    return false;
+}
+
+bool lint::operator>= (int number) const
+{
+    return false;
+}
+
+bool lint::operator== (int number) const
+{
+    return false;
+}
+
+bool lint::operator!= (int number) const
+{
+    return false;
+}
+
+// +
 lint abs(const lint &number)
 {
     lint temp(number);

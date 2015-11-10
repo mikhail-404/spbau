@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall -Werror -O2 -std=c++11   CMakeFiles/BigInteger.dir/src/main.cpp.o CMakeFiles/BigInteger.dir/src/lint.cpp.o CMakeFiles/BigInteger.dir/src/long_array.cpp.o  -o BigInteger -rdynamic 
