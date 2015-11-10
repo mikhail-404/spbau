@@ -3,8 +3,9 @@
 
 int main()
 {
-    DoubleNumber number(3.14);
-    DoubleNumber zero(0.0);
+    imprecise::DoubleNumber number;
+    std::cin >> number;
+    std::cout << number << std::endl;
     return 0;
 }
 

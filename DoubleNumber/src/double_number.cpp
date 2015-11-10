@@ -1,20 +1,24 @@
 #include "double_number.hpp"
 
+namespace imprecise
+{
+
 DoubleNumber::DoubleNumber()
+    : m_value(0.0)
 {
 
 }
 
 DoubleNumber::DoubleNumber(double value)
     : m_value(value),
-      m_delta(1e-15 * value)
+      m_delta(NUM_EXP * value)
 {
 
 }
 
 DoubleNumber::DoubleNumber(double value, double delta_in)
     : m_value(value),
-      m_delta(std::max(delta_in, 1e-15 * value))
+      m_delta(std::max(delta_in, NUM_EXP * value))
 {
 
 }
@@ -42,7 +46,7 @@ double DoubleNumber::delta() const
     return m_delta;
 }
 
-DoubleNumber &DoubleNumber::operator-()
+DoubleNumber DoubleNumber::operator-()
 {
     m_value *= -1;
     return *this;
@@ -70,7 +74,11 @@ bool DoubleNumber::operator>= (const DoubleNumber &number)
 
 bool DoubleNumber::operator== (const DoubleNumber &number)
 {
-    return !(*this < number) && !(*this > number);
+    double al = m_value - m_delta;
+    double ar = m_value + m_delta;
+    double bl = number.m_value - number.m_delta;
+    double br = number.m_value + number.m_delta;
+    return (al <= bl && bl <= ar) || (al <= br && br <= ar);
 }
 
 bool DoubleNumber::operator!= (const DoubleNumber &number)
@@ -80,7 +88,9 @@ bool DoubleNumber::operator!= (const DoubleNumber &number)
 
 std::istream& operator>>(std::istream &ist, DoubleNumber &number)
 {
-    ist >> number.m_delta >> number.m_delta;
+    double value, delta;
+    ist >> value >> delta;
+    number = DoubleNumber(value, delta);
     return ist;
 }
 
@@ -151,3 +161,5 @@ DoubleNumber operator/ (const DoubleNumber &a, const DoubleNumber &b)
     temp.m_delta  = temp.m_delta / b.m_value + (temp.m_value * b.m_delta / b.m_value / b.m_value);
     return temp;
 }
+
+} // namespace imprecise

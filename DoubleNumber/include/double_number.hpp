@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+namespace imprecise
+{
+
 class DoubleNumber
 {
 public:
@@ -18,7 +21,7 @@ public:
     double value() const;
     double delta() const;
     //
-    DoubleNumber& operator- ();
+    DoubleNumber operator- ();
     //
     DoubleNumber& operator+= (const DoubleNumber &number);
     DoubleNumber& operator-= (const DoubleNumber &number);
@@ -44,8 +47,13 @@ private:
     void swap(DoubleNumber &number);
 
 private:
+    //
+    const double NUM_EXP = 1e-15;
+    //
     double m_value;
     double m_delta;
-};
+}; // class DoubleNumber
+
+} // namespace imprecise
 
 #endif // DOUBLE_NUMBER_HPP
