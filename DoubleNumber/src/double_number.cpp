@@ -88,9 +88,7 @@ bool DoubleNumber::operator!= (const DoubleNumber &number)
 
 std::istream& operator>>(std::istream &ist, DoubleNumber &number)
 {
-    double value, delta;
-    ist >> value >> delta;
-    number = DoubleNumber(value, delta);
+    ist >> number.m_value >> number.m_delta;
     return ist;
 }
 
@@ -142,7 +140,7 @@ DoubleNumber operator- (const DoubleNumber &a, const DoubleNumber &b)
 {
     DoubleNumber temp(a);
     temp.m_value -= b.m_value;
-    temp.m_delta -= b.m_delta;
+    temp.m_delta += b.m_delta;
     return temp;
 }
 
