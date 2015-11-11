@@ -54,6 +54,9 @@ private:
     double m_delta;
 }; // class DoubleNumber
 
+DoubleNumber sin(const DoubleNumber &a);
+DoubleNumber cos(const DoubleNumber &a);
+
 } // namespace imprecise
 
 #endif // DOUBLE_NUMBER_HPP

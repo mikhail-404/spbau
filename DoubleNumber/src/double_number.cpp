@@ -89,6 +89,7 @@ bool DoubleNumber::operator!= (const DoubleNumber &number)
 std::istream& operator>>(std::istream &ist, DoubleNumber &number)
 {
     ist >> number.m_value >> number.m_delta;
+    number.m_delta = number.m_value * number.NUM_EXP; // or number = DoubleNumber(value, delta)
     return ist;
 }
 
