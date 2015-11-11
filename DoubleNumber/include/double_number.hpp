@@ -54,8 +54,10 @@ private:
     double m_delta;
 }; // class DoubleNumber
 
-DoubleNumber sin(const DoubleNumber &a);
-DoubleNumber cos(const DoubleNumber &a);
+DoubleNumber sin (const DoubleNumber &a);
+DoubleNumber cos (const DoubleNumber &a);
+DoubleNumber sqrt(const DoubleNumber &a);
+DoubleNumber log2(const DoubleNumber &a);
 
 } // namespace imprecise
 

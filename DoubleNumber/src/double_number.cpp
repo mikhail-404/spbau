@@ -1,4 +1,5 @@
 #include "double_number.hpp"
+#include <cmath>
 
 namespace imprecise
 {
@@ -160,5 +161,43 @@ DoubleNumber operator/ (const DoubleNumber &a, const DoubleNumber &b)
     temp.m_delta  = temp.m_delta / b.m_value + (temp.m_value * b.m_delta / b.m_value / b.m_value);
     return temp;
 }
+
+DoubleNumber sin(const DoubleNumber &a)
+{
+    double y = a.value(), sum = 0.0, x = a.value();
+    size_t i = 0;
+    while (std::fabs(y) >= a.delta())
+    {
+        sum += y;
+        ++i;
+        y = -y * x * x / 2 / i / (2 * i + 1);
+    }
+    return DoubleNumber(sum);
+}
+
+DoubleNumber cos(const DoubleNumber &a)
+{
+    double y = 1, sum = 0.0, x = a.value();
+    size_t i = 0;
+    while (std::fabs(y) >= a.delta())
+    {
+        sum += y;
+        ++i;
+        y = -y * x * x / 2 / i / (2 * i - 1);
+    }
+    return DoubleNumber(sum);
+}
+
+DoubleNumber sqrt(const DoubleNumber &a)
+{
+    double y = a.value(), y_prev = 0.0;
+    while (std::fabs(y - y_prev) >= a.delta())
+    {
+        y_prev = y;
+        y = (y + a.value() / y) * 0.5;
+    }
+    return DoubleNumber(y);
+}
+
 
 } // namespace imprecise
