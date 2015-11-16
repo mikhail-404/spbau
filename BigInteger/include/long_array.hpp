@@ -4,39 +4,42 @@
 #include <iostream>
 #include <cstddef>
 
+typedef int mytype;
+
 class long_array
 {
 public:
     //
     long_array();
     long_array(size_t count);
-    long_array(uint32_t value, size_t count);
+    long_array(mytype value, size_t count);
     long_array(const long_array &array);
     long_array& operator= (const long_array &array);
     ~long_array();
     //
-    void reserve(size_t size);
-    void push_back(int value);
-    uint32_t back() const;
+    void push_back(mytype value);
+    mytype back() const;
     void pop_back();
-    uint32_t& operator[] (size_t index);
-    const uint32_t& operator[] (size_t index) const;
+    mytype& operator[] (size_t index);
+    const mytype& operator[] (size_t index) const;
     //
     bool is_empty() const;
     size_t size() const;
     //
-    void reverse();
-    //
-private:
+    void resize(const size_t size);
     //
     void swap(long_array &array);
-    template <typename T> void swap(T &a, T &b);
-    void copy_array(uint32_t *a, uint32_t *b, size_t count);
-    void fill_range(int value, size_t count);
+
+private:
+    //    
+    template <typename T>
+    void swap(T &a, T &b);
+    void copy_array(mytype *a, mytype *b, size_t count);
+    void fill_range(mytype value, size_t count);
     //
 
 private:
-    uint32_t *m_array;
+    mytype   *m_array;
     size_t    m_capacity;
     size_t    m_size;
 };

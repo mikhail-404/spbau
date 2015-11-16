@@ -3,100 +3,80 @@
 
 #include <iostream>
 #include <string>
-#include <limits>
-
 #include "long_array.hpp"
 
-class lint
+class BigInteger
 {
 public:
     //
-    lint();
-    lint(const lint &big_number);
-    lint& operator= (const lint &big_number);
-    ~lint();
+    BigInteger();
     //
-    lint(int int_number);
-    lint(double double_number);
-    lint(const std::string &string_number);
+    BigInteger(int int_number);
+    BigInteger(double float_number);
     //
-    lint& operator= (int int_number);
-    lint& operator= (double double_number);
-    lint& operator= (std::string string_number);
+    BigInteger(const std::string string_number);
     //
-    operator uint64_t();
-    operator int     ();
-    operator bool    ();
+    BigInteger(const BigInteger &number);
+    //
+    BigInteger& operator= (const BigInteger &number);
+    //
+    explicit operator int();
+    explicit operator double();
+    explicit operator bool();
     //
     std::string to_string() const;
     //
-    lint& operator++ ();
-    lint& operator-- ();
-    lint  operator++ (int);
-    lint  operator-- (int);
+    BigInteger& operator+= (const BigInteger &number);
+    BigInteger& operator-= (const BigInteger &number);
+    BigInteger& operator*= (const BigInteger &number);
+    BigInteger& operator/= (const BigInteger &number);
     //
-    lint operator+ ();
-    lint operator- ();
+    BigInteger operator+ ();
+    BigInteger operator- ();
     //
-    lint operator- (const int a);
-    lint operator+ (const int a);
-    lint operator* (const int a);
-    lint operator/ (const int a);
+    friend bool operator<  (const BigInteger &a, const BigInteger &b);
+    friend bool operator== (const BigInteger &a, const BigInteger &b);
     //
-    lint operator+ (const lint &a);
-    lint operator- (const lint &a);
-    lint operator* (const lint &a);
-    lint operator/ (lint a);
-    //
-    lint& operator+= (const int a);
-    lint& operator-= (const int a);
-    lint& operator*= (const int a);
-    lint& operator/= (const int a);
-    //
-    lint& operator+= (const lint &number);
-    lint& operator-= (const lint &number);
-    lint& operator*= (const lint &number);
-    lint& operator/= (const lint &number);
-    //
-    bool operator<  (int number) const;
-    bool operator>  (int number) const;
-    bool operator<= (int number) const;
-    bool operator>= (int number) const;
-    bool operator== (int number) const;
-    bool operator!= (int number) const;
-    //
-    bool operator<  (lint number) const; // +
-    bool operator>  (lint number) const; // +
-    bool operator<= (lint number) const; // +
-    bool operator>= (lint number) const; // +
-    bool operator== (lint number) const; // +
-    bool operator!= (lint number) const; // +
-    //
-    friend std::istream& operator>> (std::istream &ist, lint &number);
-    friend std::ostream& operator<< (std::ostream &ost, const lint &number);  // +
-    friend lint abs(const lint &number); // +
+    BigInteger& operator++ ();
+    BigInteger& operator-- ();
+    BigInteger  operator++ (int);
+    BigInteger  operator-- (int);
     //
 
 private:
-    void copy_lint(const lint &number);
-    void set_abs();
-    void swap(lint &number);
-    void level_up();
-    lint add(const lint &a, const lint &b);
+    //
+    BigInteger add (const BigInteger &a, const BigInteger &b);
+    BigInteger sub (const BigInteger &a, const BigInteger &b);
+    BigInteger mult(const BigInteger &a, const BigInteger &b);
+    BigInteger div (const BigInteger &a, const BigInteger &b);
+    //
+    void       swap(BigInteger &number);
 
 private:
-    long_array       m_array;
-    char             m_sign;     // true - positive, false - negative
-    const uint32_t   m_base = 1000000000; // 1e9
-    const uint       m_base_degree = 9;
+    char                  m_sign;
+    long_array            m_array;
+    static constexpr int  m_base        = 1e9;
+    static constexpr int  m_base_degree = 9;
 };
 
+//
+std::istream& operator>> (std::istream &ist, BigInteger &number);
+std::ostream& operator<< (std::ostream &ost, const BigInteger &number);
+//
+BigInteger operator+ (const BigInteger &a, const BigInteger &b);
+BigInteger operator- (const BigInteger &a, const BigInteger &b);
+BigInteger operator* (const BigInteger &a, const BigInteger &b);
+BigInteger operator/ (const BigInteger &a, const BigInteger &b);
+//
+bool operator<= (const BigInteger &a, const BigInteger &b);
+bool operator>  (const BigInteger &a, const BigInteger &b);
+bool operator>= (const BigInteger &a, const BigInteger &b);
+bool operator!= (const BigInteger &a, const BigInteger &b);
+//
+BigInteger abs(BigInteger number);
+BigInteger pow(const BigInteger &number, int degree);
+//
 uint32_t    str_to_int(const std::string &number);
 std::string int_to_str(uint32_t number);
-
-lint operator+ (const int a, const lint &b);
-lint operator- (const int a, const lint &b);
-lint operator* (const int a, const lint &b);
-lint operator/ (const int a, const lint &b);
-
+//
 #endif // LINT_HPP

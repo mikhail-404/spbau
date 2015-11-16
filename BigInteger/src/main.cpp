@@ -1,19 +1,19 @@
 #include <iostream>
 #include "lint.hpp"
 #include <vector>
-#include <string>
 
 int main()
 {
     try
     {
-        const std::string n("12");
-        const std::string m("3");
-        lint a(n);
-        lint b(m);
-        lint c = a / b;
-        std::cout << c << std::endl;
-        //std::cout << std::numeric_limits <double>::max() << std::endl;
+//        BigInteger a("9999999999999999999999999999999999999999999999999999999123123123123123123123123199"),
+//                b("947823642346827346237846238746823847264234878"), d(12);
+//        BigInteger c = a * b;
+//        std::cout << c << std::endl;
+        BigInteger a(-1);
+        std::cout << a-- << std::endl;
+        std::cout << a << std::endl;
+
     }
     catch (std::exception &e)
     {
@@ -21,4 +21,3 @@ int main()
     }
     return 0;
 }
-
