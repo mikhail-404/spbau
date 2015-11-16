@@ -1,5 +1,8 @@
 #include "lint.hpp"
+#include <sstream>
 
+namespace apa
+{
 // +
 BigInteger::BigInteger()
     : BigInteger("0")
@@ -49,10 +52,24 @@ BigInteger::BigInteger(const BigInteger &number)
 }
 
 // +
+BigInteger::BigInteger(BigInteger&& number)
+    : m_array(std::move(number.m_array)),
+      m_sign(std::move(number.m_sign))
+{
+}
+
+// +
 BigInteger& BigInteger::operator=(const BigInteger &number)
 {
     BigInteger(number).swap(*this);
     return *this;
+}
+
+// +
+BigInteger&& BigInteger::operator= (BigInteger &&number)
+{
+    m_array = std::move(number.m_array);
+    m_sign  = std::move(number.m_sign);
 }
 
 // +
@@ -315,7 +332,6 @@ BigInteger BigInteger::div(const BigInteger &a, const BigInteger &b)
 
             uint32_t m = (l + r) / 2;
             BigInteger cur = b * (int)m;
-            std::cout << l << " " << r << " -> " << cur << " " << curValue << std::endl;
             if (cur <= curValue)
             {
                 x = m;
@@ -347,16 +363,16 @@ BigInteger::operator bool ()
     return !(m_array.size() == 1 && m_array[0] == 0);
 }
 
-// ?
+// +
 BigInteger::operator double ()
 {
-    return 0;
+    return std::stod(to_string());
 }
 
-// ?
+// +
 BigInteger::operator int ()
 {
-    return 0;
+    return std::atoi(to_string().c_str());
 }
 
 // ?
@@ -452,7 +468,6 @@ BigInteger pow(const BigInteger &number, int degree)
             result *= temp;
         temp *= temp;
         degree >>= 1;
-        std::cout << degree << std::endl;
     }
     return result;
 }
@@ -509,3 +524,5 @@ BigInteger operator/ (const BigInteger &a, const BigInteger &b)
     temp /= b;
     return temp;
 }
+
+} // namespace apa

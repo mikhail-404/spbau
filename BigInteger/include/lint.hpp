@@ -5,6 +5,8 @@
 #include <string>
 #include "long_array.hpp"
 
+namespace apa
+{
 class BigInteger
 {
 public:
@@ -17,8 +19,10 @@ public:
     BigInteger(const std::string string_number);
     //
     BigInteger(const BigInteger &number);
+    BigInteger(BigInteger&& number);
     //
-    BigInteger& operator= (const BigInteger &number);
+    BigInteger&  operator= (const BigInteger &number);
+    BigInteger&& operator= (BigInteger&& number);
     //
     explicit operator int();
     explicit operator double();
@@ -79,4 +83,5 @@ BigInteger pow(const BigInteger &number, int degree);
 uint32_t    str_to_int(const std::string &number);
 std::string int_to_str(uint32_t number);
 //
+} // namespace apa
 #endif // LINT_HPP

@@ -12,6 +12,7 @@ set(SOURCE_FILES
         src/long_array.cpp
         include/lint.hpp
         include/long_array.hpp
+        include/test.hpp
 )
 
 add_executable(BigIntegerLast ${SOURCE_FILES})

@@ -132,7 +132,6 @@ void long_array::resize(const size_t size)
 {
     for(int i = m_capacity; i <= size; ++i)
     {
-        std::cout << i << std::endl;
         push_back(0);
     }
 }
